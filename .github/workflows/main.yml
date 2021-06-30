@@ -37,24 +37,24 @@ jobs:
               password: ${{ secrets.DOCKER_PASSWORD }}
 
         - name: Build libyara
-          uses: actions/build-yara
+          uses: ./.github/actions/build-yara
           with:
               yara-version: ${{ matrix.yara-version }}
 
         - name: Build for linux
-          uses: actions/build-linux
+          uses: ./.github/actions/build-linux
 
         - name: Gather linux deps
-          uses: actions/gather-linux-deps
+          uses: ./.github/actions/gather-linux-deps
 
         - name: Test on linux
-          uses: actions/test-linux
+          uses: ./.github/actions/test-linux
 
         - name: Codecov
           uses: codecov/codecov-action@v1.5.2
 
         - name: Crossbuild for windows
-          uses: actions/crossbuild-windows
+          uses: ./.github/actions/crossbuild-windows
           with:
               openssl-version: ${{ matrix.openssl-version }}
               yara-version: ${{ matrix.yara-version }}
