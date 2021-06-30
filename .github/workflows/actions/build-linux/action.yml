@@ -1,0 +1,14 @@
+name: 'Build Linux'
+description: 'Builds yapscan for linux'
+runs:
+    using: "composite"
+    steps:
+        - run: mkdir -p cicd/build/ &>/dev/null
+        - name: Building yapscan
+          run: go build -trimpath -o ../../cicd/build/yapscan
+          working-directory: cmd/yapscan
+        - name: Upload linux build
+          uses: actions/upload-artifact@v2
+          with:
+              name: yapscan-linux
+              path: cicd/build/yapscan
