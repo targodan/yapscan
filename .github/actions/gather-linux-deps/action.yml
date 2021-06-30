@@ -3,10 +3,6 @@ description: 'Gathers linux dependencies'
 runs:
     using: "composite"
     steps:
-        - name: Crossbuilding for windows
-          run: ./crossBuildForWindows.sh
-          working-directory: cicd
-
         - name: Gathering windows dependencies
           run: |
               ldd yapscan
@@ -14,10 +10,4 @@ runs:
               ldd libyara.so*
               cp $(ldd libyara.so* | grep libcrypto | cut -d'>' -f2 | cut -d' ' -f2) .
           working-directory: cicd/build
-        - name: Upload linux deps
-          uses: actions/upload-artifact@v2
-          with:
-              name: deps-linux
-              path: |
-                cicd/build/libyara.so*
-                cicd/build/libcrypto.so*
+          shell: bash

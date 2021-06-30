@@ -10,19 +10,10 @@ inputs:
 runs:
     using: "composite"
     steps:
-        - name: Caching docker images
-          uses: satackey/action-docker-layer-caching@v0.0.11
-          continue-on-error: true
         - name: Crossbuilding for windows
           env:
               OPENSSL_VERSION: ${{ inputs.openssl-version }}
               YARA_VERSION: ${{ inputs.yara-version }}
           run: ./crossBuildForWindows.sh
           working-directory: cicd
-        - name: Upload windows build
-          uses: actions/upload-artifact@v2
-          with:
-              name: yapscan-windows
-              path: |
-                cicd/build/yapscan.exe
-                cicd/build/yapscan.dll
+          shell: bash
